@@ -13,3 +13,9 @@
 .severity-high {
   background-color: #db2f2f63;
 }
+
+@media screen and (max-width: 420px) {
+  .description {
+    width: 150px;
+  }
+}
