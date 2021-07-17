@@ -53,9 +53,16 @@ const buildIssueMarkup = (id, description, severity, assignedTo, status) => {
             ${severity}
           </p>
           <a
+            class="btn btn-success"
+            href="#"
+            onclick="setStatus('${id}', 'Open')"
+          >
+            Open
+          </a>
+          <a
             class="btn btn-warning"
             href="#"
-            onclick="setStatusClosed('${id}')"
+            onclick="setStatus('${id}', 'Closed')"
           >
             Close
           </a>
@@ -120,9 +127,9 @@ const saveIssue = (e) => {
   e.preventDefault();
 };
 
-const setStatusClosed = (id) => {
+const setStatus = (id, status) => {
   let issues = JSON.parse(localStorage.getItem(ISSUES_KEY));
-  issues = issues.map((i) => i.id === id ? {...i, status: 'Closed'} : i);
+  issues = issues.map((i) => i.id === id ? {...i, status} : i);
   localStorage.setItem(ISSUES_KEY, JSON.stringify(issues));
   fetchIssues();
 }
@@ -138,5 +145,5 @@ document.getElementById("issueInputForm").addEventListener("submit", saveIssue);
 
 /**
  * TODO
- * change the input for description to a textarea
+ * - Set the issue's color according to the issue's state
  */
