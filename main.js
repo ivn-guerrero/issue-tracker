@@ -1,43 +1,80 @@
 // https://medium.com/codingthesmartway-com-blog/pure-javascript-building-a-real-world-application-from-scratch-5213591cfcd6
 const ISSUES_KEY = "issues";
 
-const buildIssueMarkup = (id, desc, severity, assignedTo, status) => {
+const buildIssueMarkup = (id, description, severity, assignedTo, status) => {
   return `
-    <div class="well">
-      <h6>Issue ID: ${id}</h6>
-      <p>
-        <span class="label label-info">
-          ${status}
-        </span>
-      </p>
-      <h3>${desc}</h3>
-      <p>
-      <span class="glyphicon glyphicon-time"></span>
-        ${severity}
-      <span class="glyphicon glyphicon-user"></span>
-        ${assignedTo}
-      </p>
-      <a
-        class="btn btn-warning"
-        href="#"
-        onclick="setStatusClosed('${id}')"
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="heading-${id}">
+        <button
+          class="accordion-button collapsed"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#collapse-${id}"
+          aria-expanded="true"
+          aria-controls="collapse-${id}"
+        >
+          <div class="row">
+            <div class="col">
+              <span class="d-inline-block text-truncate description">
+                ${description}
+              </span>
+            </div>
+            <div class="col">
+              <span class="fw-bold">${assignedTo}</span>
+            </div>
+          </div>
+        </button>
+      </h2>
+      <div
+        id="collapse-${id}"
+        class="accordion-collapse collapse"
+        aria-labelledby="heading-${id}"
+        data-bs-parent="#issuesAccordion"
       >
-        Close
-      </a>
-      <a
-        class="btn btn-danger"
-        href="#"
-        onclick="deleteIssue('${id}')"
-      >
-        Delete
-      </a>
+        <div class="accordion-body">
+          <p>
+            <span class="fw-bold">Issue ID:</span>
+            ${id}
+          </p>
+          <p>
+            <span class="fw-bold">Assigned to:</span>
+            ${assignedTo}
+          </p>
+          <p>
+            <span class="fw-bold">Description:</span>
+            ${description}
+          </p>
+          <p>
+            <span class="fw-bold">Status:</span>
+            ${status}
+          </p>
+          <p>
+            <span class="fw-bold">Severity:</span>
+            ${severity}
+          </p>
+          <a
+            class="btn btn-warning"
+            href="#"
+            onclick="setStatusClosed('${id}')"
+          >
+            Close
+          </a>
+          <a
+            class="btn btn-danger"
+            href="#"
+            onclick="deleteIssue('${id}')"
+          >
+            Delete
+          </a>      
+        </div>
+      </div>
     </div>
   `;
 };
 
 const fetchIssues = () => {
   let issues = JSON.parse(localStorage.getItem(ISSUES_KEY)) || [];
-  let issuesList = document.getElementById("issuesList");
+  let issuesList = document.getElementById("issuesAccordion");
 
   issuesList.innerHTML = "";
 
@@ -98,3 +135,8 @@ const deleteIssue = (id) => {
 }
 
 document.getElementById("issueInputForm").addEventListener("submit", saveIssue);
+
+/**
+ * TODO
+ * change the input for description to a textarea
+ */
