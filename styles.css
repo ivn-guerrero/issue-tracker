@@ -1,3 +1,15 @@
 .description {
-  max-width: 300px;
+  width: 300px;
+}
+
+.severity-low {
+  background-color: #78aa7859;
+}
+
+.severity-medium {
+  background-color: #ffa50040;
+}
+
+.severity-high {
+  background-color: #db2f2f63;
 }

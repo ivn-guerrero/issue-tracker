@@ -1,12 +1,12 @@
-// https://medium.com/codingthesmartway-com-blog/pure-javascript-building-a-real-world-application-from-scratch-5213591cfcd6
 const ISSUES_KEY = "issues";
 
 const buildIssueMarkup = (id, description, severity, assignedTo, status) => {
+  const severityCSSClass = `severity-${severity.toLowerCase()}`;
   return `
     <div class="accordion-item">
       <h2 class="accordion-header" id="heading-${id}">
         <button
-          class="accordion-button collapsed"
+          class="accordion-button collapsed ${severityCSSClass}"
           type="button"
           data-bs-toggle="collapse"
           data-bs-target="#collapse-${id}"
@@ -20,7 +20,7 @@ const buildIssueMarkup = (id, description, severity, assignedTo, status) => {
               </span>
             </div>
             <div class="col">
-              <span class="fw-bold">${assignedTo}</span>
+              <span class="fw-bold">Assignee: ${assignedTo}</span>
             </div>
           </div>
         </button>
@@ -142,8 +142,3 @@ const deleteIssue = (id) => {
 }
 
 document.getElementById("issueInputForm").addEventListener("submit", saveIssue);
-
-/**
- * TODO
- * - Set the issue's color according to the issue's state
- */
